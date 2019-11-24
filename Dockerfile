@@ -17,7 +17,7 @@ RUN apt update -y && \
 RUN pip install ansible ansible-lint docker-py
 
 RUN cd /tmp && \
-  wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+  wget https://releases.hashicorp.com/terraform/$TERRAFORM_VERSION/terraform_$TERRAFORM_VERSION_linux_amd64.zip && \
   unzip terraform_0.12.16_linux_amd64.zip && \
   mv terraform /usr/local/bin/ && \
   rm terraform_0.12.16_linux_amd64.zip
