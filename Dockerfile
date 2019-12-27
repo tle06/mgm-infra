@@ -6,21 +6,34 @@ ARG VERSION
 ARG BUILD_DATE
 ARG VCS_REF
 ARG TERRAFORM_VERSION=0.12.16
-
-
-
+ARG GO_VERSION=1.13.5
 
 RUN apt update -y && \
-  apt install -y nano openssl unzip iputils-ping && \
+  apt install -y nano openssl unzip iputils-ping make && \
   mkdir -p /root/.ssh
 
 RUN pip install ansible ansible-lint docker-py
 
 RUN cd /tmp && \
   wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-  unzip terraform_0.12.16_linux_amd64.zip && \
+  unzip terraform_${TERRAFORM_VERSION_linux_amd64.zip && \
   mv terraform /usr/local/bin/ && \
-  rm terraform_0.12.16_linux_amd64.zip
+  rm terraform_${TERRAFORM_VERSION_linux_amd64.zip
+
+RUN cd /tmp && \
+  wget https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz && \
+  tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
+  export PATH=$PATH:/usr/local/go/bin && \
+  export GOPATH=$HOME/go && \
+  export PATH=$PATH:$GOPATH/bin
+
+
+RUN mkdir -p /root/go/src/github.com/terraform-providers/terraform-provider-hcloud && \
+  cd root/go/src/github.com/terraform-providers && \
+  git clone https://github.com/terraform-providers/terraform-provider-hcloud.git && \
+  make build && \
+  mkdir -p ~/.terraform.d/plugins && \
+  cp /root/go/bin/terraform-provider-hcloud /root/.terraform.d/plugins/terraform-provider-hcloud
 
 WORKDIR /root/
 CMD ["bash"]
