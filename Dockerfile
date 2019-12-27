@@ -31,6 +31,7 @@ RUN cd /tmp && \
 RUN mkdir -p /root/go/src/github.com/terraform-providers/terraform-provider-hcloud && \
   cd root/go/src/github.com/terraform-providers && \
   git clone https://github.com/terraform-providers/terraform-provider-hcloud.git && \
+  cd root/go/src/github.com/terraform-providers/terraform-provider-hcloud && \
   make build && \
   mkdir -p ~/.terraform.d/plugins && \
   cp /root/go/bin/terraform-provider-hcloud /root/.terraform.d/plugins/terraform-provider-hcloud
