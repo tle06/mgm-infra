@@ -22,16 +22,15 @@ RUN cd /tmp && \
 
 RUN cd /tmp && \
   wget https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz && \
-  tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
-  export PATH=$PATH:/usr/local/go/bin && \
-  export GOPATH=$HOME/go && \
-  export PATH=$PATH:$GOPATH/bin
-
+  tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
 
 RUN mkdir -p /root/go/src/github.com/terraform-providers/terraform-provider-hcloud && \
   cd /root/go/src/github.com/terraform-providers && \
   git clone https://github.com/terraform-providers/terraform-provider-hcloud.git && \
   cd /root/go/src/github.com/terraform-providers/terraform-provider-hcloud && \
+  export PATH=$PATH:/usr/local/go/bin && \
+  export GOPATH=$HOME/go && \
+  export PATH=$PATH:$GOPATH/bin && \
   make build && \
   mkdir -p ~/.terraform.d/plugins && \
   cp /root/go/bin/terraform-provider-hcloud /root/.terraform.d/plugins/terraform-provider-hcloud
