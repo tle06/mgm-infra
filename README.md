@@ -12,6 +12,8 @@ This image is build to be use with gitlab CI/CD pipeline. The target is to deplo
 
 Build from [python:latest](https://hub.docker.com/_/python)
 
+Added packages:
+
 * nano
 * openssl
 * unzip
