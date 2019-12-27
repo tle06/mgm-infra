@@ -34,7 +34,7 @@ Added packages:
 Starting the wikijs instance listening on port 80 is as easy as the following:
 
 ``` Docker
-$ docker run -d --restart=unless-stopped tlnk/mgm-infra
+docker run -d --restart=unless-stopped tlnk/mgm-infra
 ```
 
 ### Use docker compose
