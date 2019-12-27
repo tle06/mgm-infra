@@ -16,9 +16,9 @@ RUN pip install ansible ansible-lint docker-py
 
 RUN cd /tmp && \
   wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-  unzip terraform_${TERRAFORM_VERSION_linux_amd64.zip && \
+  unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
   mv terraform /usr/local/bin/ && \
-  rm terraform_${TERRAFORM_VERSION_linux_amd64.zip
+  rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
 RUN cd /tmp && \
   wget https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz && \
