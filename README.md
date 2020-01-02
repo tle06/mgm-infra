@@ -23,7 +23,9 @@ Added packages:
 * ansible
 * ansible-lint
 * terraform
-* terraform-provider-hcloud
+* [terraform-provider-hcloud](https://github.com/terraform-providers/terraform-provider-hcloud)
+* [terraform-provider-ansible](https://github.com/nbering/terraform-provider-ansible/)
+* [terraform Inventory](https://github.com/nbering/terraform-inventory)
 
 * workdir = /root
 

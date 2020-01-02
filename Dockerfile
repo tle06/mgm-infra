@@ -7,6 +7,7 @@ ARG BUILD_DATE
 ARG VCS_REF
 ARG TERRAFORM_VERSION=0.12.16
 ARG GO_VERSION=1.13.5
+ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
 
 RUN apt update -y && \
   apt install -y nano openssl unzip iputils-ping make && \
@@ -34,6 +35,16 @@ RUN mkdir -p /root/go/src/github.com/terraform-providers/terraform-provider-hclo
   make build && \
   mkdir -p ~/.terraform.d/plugins && \
   cp /root/go/bin/terraform-provider-hcloud /root/.terraform.d/plugins/terraform-provider-hcloud
+
+RUN cd /tmp && \
+  wget https://github.com/nbering/terraform-provider-ansible/releases/download/v${TERRAFORM_PROVIDER_ANSIBLE}/terraform-provider-ansible-linux_amd64.zip && \
+  unzip terraform-provider-ansible-linux_amd64.zip && \
+  cp /tmp/linux_amd64/terraform-provider-ansible_v${TERRAFORM_PROVIDER_ANSIBLE} /root/.terraform.d/plugins/terraform-provider-ansible_v${TERRAFORM_PROVIDER_ANSIBLE} && \
+  rm /tmp/terraform-provider-ansible-linux_amd64.zip && \
+  rm -rf /tmp/linux_amd64
+
+RUN wget -P /etc/ansible/ https://github.com/nbering/terraform-inventory/blob/master/terraform.py && \
+  chmod +x /etc/ansible/terraform.py
 
 WORKDIR /root/
 CMD ["bash"]
