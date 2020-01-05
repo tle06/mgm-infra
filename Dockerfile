@@ -44,7 +44,9 @@ RUN cd /tmp && \
   rm /tmp/terraform-provider-ansible-linux_amd64.zip && \
   rm -rf /tmp/linux_amd64
 
-RUN wget -P /etc/ansible/ https://raw.githubusercontent.com/nbering/terraform-inventory/master/terraform.py && \
+RUN cd /tmp && \
+  wget https://raw.githubusercontent.com/nbering/terraform-inventory/master/terraform.py && \
+  mv terraform.py /etc/ansible/terraform.py && \
   chmod +x /etc/ansible/terraform.py
 
 WORKDIR /root/
