@@ -23,7 +23,8 @@ RUN cd /tmp && \
 
 RUN cd /tmp && \
   wget https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz && \
-  tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
+  tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
+  rm go${GO_VERSION}.linux-amd64.tar.gz
 
 RUN mkdir -p /root/go/src/github.com/terraform-providers/terraform-provider-hcloud && \
   cd /root/go/src/github.com/terraform-providers && \
