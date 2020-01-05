@@ -46,6 +46,7 @@ RUN cd /tmp && \
 
 RUN cd /tmp && \
   wget https://raw.githubusercontent.com/nbering/terraform-inventory/master/terraform.py && \
+  mkdir -p /etc/ansible && \
   mv terraform.py /etc/ansible/terraform.py && \
   chmod +x /etc/ansible/terraform.py
 
