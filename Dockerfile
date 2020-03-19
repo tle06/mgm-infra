@@ -13,7 +13,7 @@ RUN apt update -y && \
   apt install -y nano openssl unzip iputils-ping make && \
   mkdir -p /root/.ssh
 
-RUN pip3 install ansible ansible-lint docker-py
+RUN pip3 install ansible ansible-lint docker-py pywinrm
 
 RUN cd /tmp && \
   wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
