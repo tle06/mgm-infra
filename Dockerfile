@@ -10,7 +10,7 @@ ARG GO_VERSION=1.13.5
 ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
 
 RUN apt update -y && \
-  apt install -y nano openssl unzip iputils-ping make && \
+  apt install -y nano openssl unzip iputils-ping make python-jmespath && \
   mkdir -p /root/.ssh
 
 RUN pip3 install ansible ansible-lint docker-py pywinrm
