@@ -19,9 +19,11 @@ Added packages:
 * unzip
 * iputils-ping
 * make
+* python-jmespath
 * go
 * ansible
 * ansible-lint
+* pywinrm
 * terraform
 * [terraform-provider-hcloud](https://github.com/terraform-providers/terraform-provider-hcloud)
 * [terraform-provider-ansible](https://github.com/nbering/terraform-provider-ansible/)
