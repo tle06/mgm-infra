@@ -10,10 +10,10 @@ ARG GO_VERSION=1.13.5
 ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
 
 RUN apt update -y && \
-  apt install -y nano openssl unzip iputils-ping make python-jmespath && \
+  apt install -y nano openssl unzip iputils-ping make && \
   mkdir -p /root/.ssh
 
-RUN pip3 install ansible ansible-lint docker-py pywinrm
+RUN pip3 install ansible ansible-lint docker-py pywinrm jmespath
 
 RUN cd /tmp && \
   wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
