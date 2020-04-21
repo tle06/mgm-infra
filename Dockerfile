@@ -10,7 +10,7 @@ ARG GO_VERSION=1.13.5
 ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
 
 RUN apt update -y && \
-  apt install -y nano openssl unzip iputils-ping make && \
+  apt install -y nano openssl unzip iputils-ping make curl && \
   mkdir -p /root/.ssh
 
 RUN pip3 install ansible ansible-lint docker-py pywinrm jmespath
@@ -49,6 +49,11 @@ RUN cd /tmp && \
   mkdir -p /etc/ansible && \
   mv terraform.py /etc/ansible/terraform.py && \
   chmod +x /etc/ansible/terraform.py
+
+RUN cd /tmp && \
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+  unzip awscliv2.zip && \
+  ./aws/install
 
 WORKDIR /root/
 CMD ["bash"]
