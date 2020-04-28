@@ -30,6 +30,7 @@ Added packages:
 * [terraform-provider-ansible](https://github.com/nbering/terraform-provider-ansible/)
 * [terraform Inventory](https://github.com/nbering/terraform-inventory)
 * [aws cli v2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html)
+* [Helm](https://helm.sh/docs/intro/install/)
 
 * workdir = /root
 

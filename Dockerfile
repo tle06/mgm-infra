@@ -8,6 +8,7 @@ ARG VCS_REF
 ARG TERRAFORM_VERSION=0.12.23
 ARG GO_VERSION=1.13.5
 ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
+ARG HELM_VERSION=3.2
 
 RUN apt update -y && \
   apt install -y nano openssl unzip iputils-ping make curl && \
@@ -54,6 +55,11 @@ RUN cd /tmp && \
   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
   unzip awscliv2.zip && \
   ./aws/install
+
+RUN cd /tmp && \
+  curl -fsSL "https://github.com/helm/helm/blob/release-${HELM_VERSION}/scripts/get-helm-3" -o "get_helm.sh" && \
+  chmod 700 get_helm.sh && \
+  ./get_helm.sh
 
 WORKDIR /root/
 CMD ["bash"]
