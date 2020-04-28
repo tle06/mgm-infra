@@ -8,7 +8,7 @@ ARG VCS_REF
 ARG TERRAFORM_VERSION=0.12.23
 ARG GO_VERSION=1.13.5
 ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
-ARG HELM_VERSION=3.2
+ARG HELM_VERSION=3.2.0
 
 RUN apt update -y && \
   apt install -y nano openssl unzip iputils-ping make curl && \
@@ -57,9 +57,9 @@ RUN cd /tmp && \
   ./aws/install
 
 RUN cd /tmp && \
-  curl -fsSL "https://github.com/helm/helm/blob/release-${HELM_VERSION}/scripts/get-helm-3" -o "get_helm.sh" && \
-  chmod 700 get_helm.sh && \
-  ./get_helm.sh
+  wget "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
+  tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
+  mv linux-amd64/helm /usr/local/bin/helm
 
 WORKDIR /root/
 CMD ["bash"]
