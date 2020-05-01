@@ -25,6 +25,7 @@ Added packages:
 * ansible
 * ansible-lint
 * pywinrm
+* netaddr
 * terraform
 * [terraform-provider-hcloud](https://github.com/terraform-providers/terraform-provider-hcloud)
 * [terraform-provider-ansible](https://github.com/nbering/terraform-provider-ansible/)
