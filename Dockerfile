@@ -16,6 +16,8 @@ RUN apt update -y && \
 
 RUN pip3 install ansible ansible-lint docker-py pywinrm jmespath netaddr
 
+RUN pip install netaddr
+
 RUN cd /tmp && \
   wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
   unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
