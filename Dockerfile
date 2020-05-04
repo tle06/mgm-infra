@@ -61,7 +61,8 @@ RUN cd /tmp && \
 RUN cd /tmp && \
   wget "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
   tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
-  mv linux-amd64/helm /usr/local/bin/helm
+  mv linux-amd64/helm /usr/local/bin/helm && \
+  chmod 700 /usr/local/bin/helm
 
 WORKDIR /root/
 CMD ["bash"]
