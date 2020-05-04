@@ -9,6 +9,7 @@ ARG TERRAFORM_VERSION=0.12.23
 ARG GO_VERSION=1.13.5
 ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
 ARG HELM_VERSION=3.2.0
+ARG KNATIVE_VERSION=0.14.0
 
 RUN apt update -y && \
   apt install -y nano openssl unzip iputils-ping make curl && \
@@ -63,6 +64,11 @@ RUN cd /tmp && \
   tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
   mv linux-amd64/helm /usr/local/bin/helm && \
   chmod 700 /usr/local/bin/helm
+
+RUN cd /tmp && \
+  wget "https://github.com/knative/client/releases/download/v${KNATIVE_VERSION}/kn-linux-amd64" && \
+  mv kn-linux-amd64 /usr/local/bin/kn && \
+  chmod 700 /usr/local/bin/kn
 
 WORKDIR /root/
 CMD ["bash"]
