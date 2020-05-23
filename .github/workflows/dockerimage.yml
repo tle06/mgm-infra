@@ -13,4 +13,4 @@ jobs:
     - name: Login Docker hub
       run: docker login --username ${{ secrets.DOCKER_HUB_USER }} --password ${{ secrets.DOCKER_HUB_TOKEN }}
     - name: Publish on Docker hub
-      run: docker push tlnk/mgm-infra:latest
+      run: docker push tlnk/mgm-infra:$(git rev-parse --short $GITHUB_SHA)
