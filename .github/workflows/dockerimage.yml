@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag tlnk/mgm-infra:latest
+      run: docker build . --file Dockerfile --tag tlnk/mgm-infra:$(git rev-parse --short ${{env.GITHUB_SHA}})
     - name: Login Docker hub
       run: docker login --username ${{ secrets.DOCKER_HUB_USER }} --password ${{ secrets.DOCKER_HUB_TOKEN }}
     - name: Publish on Docker hub
