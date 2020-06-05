@@ -27,6 +27,7 @@ Added packages:
 * pywinrm
 * netaddr
 * pexpect
+* packaging
 * ansible[azure]
 * terraform
 * [terraform-provider-hcloud](https://github.com/terraform-providers/terraform-provider-hcloud)
