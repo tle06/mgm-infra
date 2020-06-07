@@ -15,7 +15,7 @@ RUN apt update -y && \
   apt install -y nano openssl unzip iputils-ping make curl && \
   mkdir -p /root/.ssh
 
-RUN pip3 install ansible ansible-lint docker-py pywinrm jmespath netaddr pexpect packaging msrest
+RUN pip3 install ansible ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib
 
 RUN pip3 install 'ansible[azure]'
 
