@@ -36,6 +36,7 @@ Added packages:
 * [aws cli v2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html)
 * [Helm](https://helm.sh/docs/intro/install/)
 * [knativectl](https://knative.dev/docs/install/install-kn/)
+* [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest)
 
 * workdir = /root
 
@@ -46,7 +47,7 @@ Added packages:
 Starting the wikijs instance listening on port 80 is as easy as the following:
 
 ``` Docker
-docker run -d --restart=unless-stopped tlnk/mgm-infra
+docker run -d --restart=unless-stopped tlnk/mgm-infra:tag
 ```
 
 ## how to use this image with gitlab CI/CD
@@ -63,7 +64,7 @@ stages:
 
 job-ansible-lint:
   stage: job-ansible-lint
-  image: tlnk/mgm-infra
+  image: tlnk/mgm-infra:tag
   script:
     - cp -r /builds/gitlabusername/infrastructure/ansible /root/ansible
     - cd /root/ansible
@@ -76,7 +77,7 @@ job-ansible-lint:
 
 job-ansible-deploy:
   stage: job-ansible-deploy
-  image: tlnk/mgm-infra
+  image: tlnk/mgm-infra:tag
   script:
     - eval $(ssh-agent -s)
     - touch /root/.ssh/id_rsa

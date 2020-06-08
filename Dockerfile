@@ -70,6 +70,11 @@ RUN cd /tmp && \
   mv kn-linux-amd64 /usr/local/bin/kn && \
   chmod 700 /usr/local/bin/kn
 
+RUN cd /tmp && \
+  curl -sL https://aka.ms/InstallAzureCLIDeb -o installAzureCli.sh && \
+  chmod a+x installAzureCli.sh && \
+  ./installAzureCli.sh
+
 WORKDIR /root/
 CMD ["bash"]
 
