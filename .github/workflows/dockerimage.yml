@@ -8,9 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Build the Docker image
+    - name: Build the Docker image:tag
       run: docker build . --file Dockerfile --tag tlnk/mgm-infra:$(git rev-parse --short $GITHUB_SHA)
+    - name: Build the Docker image:latest
+      run: docker build . --file Dockerfile --tag tlnk/mgm-infra:latest
     - name: Login Docker hub
       run: docker login --username ${{ secrets.DOCKER_HUB_USER }} --password ${{ secrets.DOCKER_HUB_TOKEN }}
     - name: Publish on Docker hub
       run: docker push tlnk/mgm-infra:$(git rev-parse --short $GITHUB_SHA)
+    - name: Publish on Docker hub
+      run: docker push tlnk/mgm-infra:latest
