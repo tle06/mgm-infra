@@ -5,6 +5,7 @@ LABEL maintainer="tlnk.fr"
 ARG VERSION
 ARG BUILD_DATE
 ARG VCS_REF
+ARG ANSIBLE_VERSION=2.9.6
 ARG TERRAFORM_VERSION=0.12.24
 ARG GO_VERSION=1.13.5
 ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
@@ -15,7 +16,7 @@ RUN apt update -y && \
   apt install -y nano openssl unzip iputils-ping make curl && \
   mkdir -p /root/.ssh
 
-RUN pip3 install ansible ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib
+RUN pip3 install 'ansible==${ANSIBLE_VERSION}' ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib
 
 RUN pip3 install 'ansible[azure]'
 
