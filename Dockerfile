@@ -1,5 +1,5 @@
 #Dockerfile mgm-infra
-FROM python:latest
+FROM python:3.8.2
 LABEL maintainer="tlnk.fr"
 
 ARG VERSION
