@@ -18,7 +18,7 @@ RUN apt update -y && \
 
 RUN pip3 install ansible==${ANSIBLE_VERSION} ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib
 
-RUN pip3 install 'ansible[azure]'
+RUN pip3 install ansible[azure]
 
 RUN cd /tmp && \
   wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
