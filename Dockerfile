@@ -76,6 +76,8 @@ RUN cd /tmp && \
   chmod a+x installAzureCli.sh && \
   ./installAzureCli.sh
 
+RUN ansible-galaxy collection install azure.azcollection --force
+
 WORKDIR /root/
 CMD ["bash"]
 

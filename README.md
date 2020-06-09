@@ -37,6 +37,7 @@ Added packages:
 * [Helm](https://helm.sh/docs/intro/install/)
 * [knativectl](https://knative.dev/docs/install/install-kn/)
 * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest)
+* [Azure module](https://github.com/ansible-collections/azure)
 
 * workdir = /root
 
