@@ -1,90 +1,91 @@
 #Dockerfile mgm-infra
-FROM python:3.8.2
-LABEL maintainer="tlnk.fr"
+# ---------------------------------------------------------------------------- #
+#                                Download files                                #
+# ---------------------------------------------------------------------------- #
 
-ARG VERSION
-ARG BUILD_DATE
-ARG VCS_REF
-ARG ANSIBLE_VERSION=2.9.6
+FROM busybox:1.31.1 AS download
+
 ARG TERRAFORM_VERSION=0.12.24
-ARG GO_VERSION=1.13.5
 ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
 ARG HELM_VERSION=3.2.1
 ARG KNATIVE_VERSION=0.14.0
 
-RUN apt update -y && \
-  apt install -y nano openssl unzip iputils-ping make curl && \
-  mkdir -p /root/.ssh
+WORKDIR /tmp
 
-RUN pip3 install ansible==${ANSIBLE_VERSION} ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib
-
-RUN pip3 install ansible[azure]
-
-RUN cd /tmp && \
-  wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
   unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-  mv terraform /usr/local/bin/ && \
   rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
-RUN cd /tmp && \
-  wget https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz && \
-  tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz && \
-  rm go${GO_VERSION}.linux-amd64.tar.gz
-
-RUN mkdir -p /root/go/src/github.com/terraform-providers/terraform-provider-hcloud && \
-  cd /root/go/src/github.com/terraform-providers && \
-  git clone https://github.com/terraform-providers/terraform-provider-hcloud.git && \
-  cd /root/go/src/github.com/terraform-providers/terraform-provider-hcloud && \
-  export PATH=$PATH:/usr/local/go/bin && \
-  export GOPATH=$HOME/go && \
-  export PATH=$PATH:$GOPATH/bin && \
-  make build && \
-  mkdir -p ~/.terraform.d/plugins && \
-  cp /root/go/bin/terraform-provider-hcloud /root/.terraform.d/plugins/terraform-provider-hcloud
-
-RUN cd /tmp && \
-  wget https://github.com/nbering/terraform-provider-ansible/releases/download/v${TERRAFORM_PROVIDER_ANSIBLE}/terraform-provider-ansible-linux_amd64.zip && \
+RUN wget https://github.com/nbering/terraform-provider-ansible/releases/download/v${TERRAFORM_PROVIDER_ANSIBLE}/terraform-provider-ansible-linux_amd64.zip && \
   unzip terraform-provider-ansible-linux_amd64.zip && \
-  cp /tmp/linux_amd64/terraform-provider-ansible_v${TERRAFORM_PROVIDER_ANSIBLE} /root/.terraform.d/plugins/terraform-provider-ansible_v${TERRAFORM_PROVIDER_ANSIBLE} && \
-  rm /tmp/terraform-provider-ansible-linux_amd64.zip && \
-  rm -rf /tmp/linux_amd64
+  mv linux_amd64/terraform-provider-ansible_v${TERRAFORM_PROVIDER_ANSIBLE} linux_amd64/terraform-provider-ansible && \
+  rm terraform-provider-ansible-linux_amd64.zip
 
-RUN cd /tmp && \
-  wget https://raw.githubusercontent.com/tle06/terraform-inventory/master/terraform.py && \
-  mkdir -p /etc/ansible && \
-  mv terraform.py /etc/ansible/terraform.py && \
-  chmod +x /etc/ansible/terraform.py
-
-RUN cd /tmp && \
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
-  unzip awscliv2.zip && \
-  ./aws/install
-
-RUN cd /tmp && \
-  wget "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
+RUN wget "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
   tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
-  mv linux-amd64/helm /usr/local/bin/helm && \
-  chmod 700 /usr/local/bin/helm
+  rm helm-v${HELM_VERSION}-linux-amd64.tar.gz
 
-RUN cd /tmp && \
-  wget "https://github.com/knative/client/releases/download/v${KNATIVE_VERSION}/kn-linux-amd64" && \
-  mv kn-linux-amd64 /usr/local/bin/kn && \
-  chmod 700 /usr/local/bin/kn
+RUN wget "https://github.com/knative/client/releases/download/v${KNATIVE_VERSION}/kn-linux-amd64"
 
-RUN cd /tmp && \
-  curl -sL https://aka.ms/InstallAzureCLIDeb -o installAzureCli.sh && \
-  chmod a+x installAzureCli.sh && \
-  ./installAzureCli.sh
+RUN wget https://raw.githubusercontent.com/tle06/terraform-inventory/master/terraform.py && \
+  wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2.zip" && \
+  unzip awscliv2.zip && \
+  rm awscliv2.zip
 
-RUN ansible-galaxy collection install azure.azcollection --force
+# ---------------------------------------------------------------------------- #
+#                                  Final image                                 #
+# ---------------------------------------------------------------------------- #
+
+FROM python:3.8.2-slim-buster
+LABEL maintainer="tle@tlnk.fr"
+
+ARG BUILD_VERSION
+ARG BUILD_DATE
+ARG VCS_REF
+ARG ANSIBLE_VERSION=2.9.6
+
+RUN apt update -y && \
+  apt install -y nano openssl unzip iputils-ping curl && \
+  mkdir -p /tmp && \
+  mkdir -p /root/.ssh && \
+  mkdir -p /root/.terraform.d/plugins && \
+  mkdir -p /etc/ansible
+
+COPY --from=download /tmp/terraform /usr/local/bin/terraform
+COPY --from=download /tmp/linux_amd64/terraform-provider-ansible /root/.terraform.d/plugins/terraform-provider-ansible
+COPY --from=download /tmp/terraform.py /etc/ansible/terraform.py
+COPY --from=download /tmp/aws /tmp/aws
+COPY --from=download /tmp/linux-amd64/helm /usr/local/bin/helm
+COPY --from=download /tmp/kn-linux-amd64 /usr/local/bin/kn
+
+COPY cli/installAzureCli.sh /tmp/installAzureCli.sh
+COPY terraform/provider/terraform-provider-hcloud /root/.terraform.d/plugins/terraform/provider/terrafor-provider-hcloud
+
+RUN pip3 install ansible==${ANSIBLE_VERSION}
+
+RUN pip3 install ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib && \
+  pip3 install ansible[azure] && \
+  ansible-galaxy collection install azure.azcollection --force && \
+  ./tmp/aws/install && \
+  chmod a+x /tmp/installAzureCli.sh && \
+  ./tmp/installAzureCli.sh
+
+RUN chmod +x /etc/ansible/terraform.py && \
+  chmod 700 /usr/local/bin/kn && \
+  chmod 700 /usr/local/bin/helm && \
+  rm -rf /tmp/* && \
+  rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root/
 CMD ["bash"]
 
-LABEL org.label-schema.version=$VERSION
-LABEL org.label-schema.build-date=$BUILD_DATE
+LABEL org.label-schema.name="mgm-infra"
+LABEL org.label-schema.description="Tool to deploy infrastructure as code"
+LABEL org.label-schema.url="https://github.com/tle06/mgm-infra"
+LABEL org.label-schema.vendor="TLNK"
 LABEL org.label-schema.vcs-ref=$VCS_REF
 LABEL org.label-schema.vcs-url="https://github.com/tle06/mgm-infra.git"
-LABEL org.label-schema.name="mgm-infra"
-LABEL org.label-schema.vendor="mgm-infra"
 LABEL org.label-schema.schema-version="1.0"
+LABEL org.label-schema.version=$BUILD_VERSION
+LABEL org.label-schema.build-date=$BUILD_DATE
+LABEL org.label-schema.docker.cmd="docker run -t -i tlnk/mgm-infra"
