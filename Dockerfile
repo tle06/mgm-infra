@@ -48,18 +48,18 @@ RUN apt update -y && \
   apt install -y nano openssl unzip iputils-ping curl && \
   mkdir -p /tmp && \
   mkdir -p /root/.ssh && \
-  mkdir -p /root/.terraform.d/plugins && \
+  mkdir -p /root/.terraform.d/plugins/linux_amd64 && \
   mkdir -p /etc/ansible
 
 COPY --from=download /tmp/terraform /usr/local/bin/terraform
-COPY --from=download /tmp/linux_amd64/terraform-provider-ansible /root/.terraform.d/plugins/terraform-provider-ansible
+COPY --from=download /tmp/linux_amd64/terraform-provider-ansible /root/.terraform.d/plugins/linux_amd64/terraform-provider-ansible
 COPY --from=download /tmp/terraform.py /etc/ansible/terraform.py
 COPY --from=download /tmp/aws /tmp/aws
 COPY --from=download /tmp/linux-amd64/helm /usr/local/bin/helm
 COPY --from=download /tmp/kn-linux-amd64 /usr/local/bin/kn
 
 COPY cli/installAzureCli.sh /tmp/installAzureCli.sh
-COPY terraform/provider/terraform-provider-hcloud /root/.terraform.d/plugins/terraform/provider/terrafor-provider-hcloud
+#COPY terraform/provider/terraform-provider-hcloud /root/.terraform.d/plugins/terraform/provider/terrafor-provider-hcloud
 
 RUN pip3 install ansible==${ANSIBLE_VERSION}
 
