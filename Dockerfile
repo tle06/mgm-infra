@@ -57,9 +57,7 @@ COPY --from=download /tmp/terraform.py /etc/ansible/terraform.py
 COPY --from=download /tmp/aws /tmp/aws
 COPY --from=download /tmp/linux-amd64/helm /usr/local/bin/helm
 COPY --from=download /tmp/kn-linux-amd64 /usr/local/bin/kn
-
 COPY cli/installAzureCli.sh /tmp/installAzureCli.sh
-#COPY terraform/provider/terraform-provider-hcloud /root/.terraform.d/plugins/terraform/provider/terrafor-provider-hcloud
 
 RUN pip3 install ansible==${ANSIBLE_VERSION}
 
