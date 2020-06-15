@@ -15,6 +15,9 @@ Build from [python:latest](https://hub.docker.com/_/python)
 Added packages:
 
 * nano
+* libssl-dev
+* libffi-dev
+* python-dev
 * openssl
 * unzip
 * curl
