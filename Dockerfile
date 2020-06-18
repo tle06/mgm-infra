@@ -45,7 +45,7 @@ ARG VCS_REF
 ARG ANSIBLE_VERSION=2.9.6
 
 RUN apt update -y && \
-  apt install -y nano openssl unzip iputils-ping libssl-dev libffi-dev python-dev curl && \
+  apt install -y nano openssl unzip iputils-ping libssl-dev libffi-dev python-dev curl git && \
   mkdir -p /tmp && \
   mkdir -p /root/.ssh && \
   mkdir -p /root/.terraform.d/plugins/linux_amd64 && \

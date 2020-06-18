@@ -21,6 +21,7 @@ Added packages:
 * openssl
 * unzip
 * curl
+* git
 * iputils-ping
 * make
 * python-jmespath
