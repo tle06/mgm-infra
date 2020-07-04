@@ -33,6 +33,9 @@ Added packages:
 * pexpect
 * passlib
 * ansible[azure]
+* kubernetes-validate
+* openshift
+* PyYAML
 * terraform
 * [terraform-provider-hcloud](https://github.com/terraform-providers/terraform-provider-hcloud)
 * [terraform-provider-ansible](https://github.com/nbering/terraform-provider-ansible/)
