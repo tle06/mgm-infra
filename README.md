@@ -1,3 +1,5 @@
+![Publish Image on Docker Hub](https://github.com/tle06/mgm-infra/workflows/Publish%20to%20Docker%20hub/badge.svg?branch=master)
+
 # Management infrastructure
 
 ## Description
