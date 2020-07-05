@@ -8,7 +8,10 @@ FROM busybox:1.31.1 AS download
 ARG TERRAFORM_VERSION=0.12.24
 ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
 ARG HELM_VERSION=3.2.1
-ARG KNATIVE_VERSION=0.14.0
+ARG KNATIVE_VERSION=v0.14.0
+ARG KUBECTL_VERSION=v1.18.5
+ARG ARGOCDCTL_VERSION=v1.6.1
+ARG GLOOCTL_VERSION=v1.4.2
 
 WORKDIR /tmp
 
@@ -25,7 +28,10 @@ RUN wget "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
   tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
   rm helm-v${HELM_VERSION}-linux-amd64.tar.gz
 
-RUN wget "https://github.com/knative/client/releases/download/v${KNATIVE_VERSION}/kn-linux-amd64"
+RUN wget "https://github.com/knative/client/releases/download/${KNATIVE_VERSION}/kn-linux-amd64" && \
+  wget "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && \
+  wget "https://github.com/argoproj/argo-cd/releases/download/${RGOCDCTL_VERSION}/argocd-linux-amd64" && \
+  wget "https://github.com/solo-io/gloo/releases/download/${GLOOCTL_VERSION}/glooctl-linux-amd64"
 
 RUN wget https://raw.githubusercontent.com/tle06/terraform-inventory/master/terraform.py && \
   wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2.zip" && \
@@ -43,6 +49,7 @@ ARG BUILD_VERSION
 ARG BUILD_DATE
 ARG VCS_REF
 ARG ANSIBLE_VERSION=2.9.6
+ARG AZ_REQUIREMENT_VERSION=v0.2.0
 
 RUN apt update -y && \
   apt install -y nano openssl unzip iputils-ping libssl-dev libffi-dev python-dev curl git && \
@@ -57,12 +64,16 @@ COPY --from=download /tmp/terraform.py /etc/ansible/terraform.py
 COPY --from=download /tmp/aws /tmp/aws
 COPY --from=download /tmp/linux-amd64/helm /usr/local/bin/helm
 COPY --from=download /tmp/kn-linux-amd64 /usr/local/bin/kn
+COPY --from=download /tmp/kubectl /usr/local/bin/kubectl
+COPY --from=download /tmp/argocd-linux-amd64 /usr/local/bin/argoctl
+COPY --from=download /tmp/glooctl-linux-amd64 /usr/local/bin/glooctl
 COPY cli/installAzureCli.sh /tmp/installAzureCli.sh
 
 RUN pip3 install ansible==${ANSIBLE_VERSION}
 
 RUN pip3 install ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib kubernetes-validate openshift PyYAML && \
   pip3 install ansible[azure] && \
+  pip3 install -r "https://raw.githubusercontent.com/ansible-collections/azure/${AZ_REQUIREMENT_VERSION}/requirements-azure.txt" && \
   ansible-galaxy collection install azure.azcollection --force && \
   ./tmp/aws/install && \
   chmod a+x /tmp/installAzureCli.sh && \

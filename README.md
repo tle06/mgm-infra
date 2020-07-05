@@ -45,6 +45,9 @@ Added packages:
 * [knativectl](https://knative.dev/docs/install/install-kn/)
 * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt?view=azure-cli-latest)
 * [Azure module](https://github.com/ansible-collections/azure)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [Argoctl](https://github.com/argoproj/argo-cd/releases)
+* [glooctl](https://github.com/solo-io/gloo/releases)
 
 * workdir = /root
 
