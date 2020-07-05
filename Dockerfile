@@ -30,7 +30,7 @@ RUN wget "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
 
 RUN wget "https://github.com/knative/client/releases/download/${KNATIVE_VERSION}/kn-linux-amd64" && \
   wget "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && \
-  wget "https://github.com/argoproj/argo-cd/releases/download/${RGOCDCTL_VERSION}/argocd-linux-amd64" && \
+  wget "https://github.com/argoproj/argo-cd/releases/download/${ARGOCDCTL_VERSION}/argocd-linux-amd64" && \
   wget "https://github.com/solo-io/gloo/releases/download/${GLOOCTL_VERSION}/glooctl-linux-amd64"
 
 RUN wget https://raw.githubusercontent.com/tle06/terraform-inventory/master/terraform.py && \
