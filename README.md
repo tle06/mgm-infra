@@ -50,6 +50,7 @@ Added packages:
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Argoctl](https://github.com/argoproj/argo-cd/releases)
 * [glooctl](https://github.com/solo-io/gloo/releases)
+* [docopt](http://docopt.org/)
 
 * workdir = /root
 

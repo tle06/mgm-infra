@@ -71,7 +71,7 @@ COPY cli/installAzureCli.sh /tmp/installAzureCli.sh
 
 RUN pip3 install ansible==${ANSIBLE_VERSION}
 
-RUN pip3 install ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib kubernetes-validate openshift PyYAML && \
+RUN pip3 install ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib kubernetes-validate openshift PyYAML docopt==0.6.2 && \
   pip3 install ansible[azure] && \
   pip3 install -r "https://raw.githubusercontent.com/ansible-collections/azure/${AZ_REQUIREMENT_VERSION}/requirements-azure.txt" && \
   ansible-galaxy collection install azure.azcollection --force && \
