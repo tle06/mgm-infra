@@ -38,6 +38,7 @@ Added packages:
 * kubernetes-validate
 * openshift
 * PyYAML
+* PyMySQL
 * terraform
 * [terraform-provider-hcloud](https://github.com/terraform-providers/terraform-provider-hcloud)
 * [terraform-provider-ansible](https://github.com/nbering/terraform-provider-ansible/)
