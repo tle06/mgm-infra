@@ -38,6 +38,7 @@ Added packages:
 * kubernetes-validate
 * openshift
 * PyYAML
+* ruamel.yaml
 * PyMySQL
 * yamlpath
 * terraform

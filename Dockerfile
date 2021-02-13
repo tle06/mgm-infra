@@ -40,6 +40,7 @@ RUN wget "https://github.com/knative/client/releases/download/${KNATIVE_VERSION}
 RUN wget https://raw.githubusercontent.com/tle06/terraform-inventory/master/terraform.py && \
   wget "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -O "awscliv2.zip" && \
   unzip awscliv2.zip && \
+  chmod +x terraform.py && \
   rm awscliv2.zip
 
 # ---------------------------------------------------------------------------- #
@@ -73,9 +74,12 @@ COPY --from=download /tmp/argocd-linux-amd64 /usr/local/bin/argoctl
 COPY --from=download /tmp/glooctl-linux-amd64 /usr/local/bin/glooctl
 COPY cli/installAzureCli.sh /tmp/installAzureCli.sh
 
+RUN pip3 install --upgrade pip
+
 RUN pip3 install ansible==${ANSIBLE_VERSION}
 
-RUN pip3 install ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib kubernetes-validate openshift PyYAML docopt==0.6.2 PyMySQL yamlpath && \
+RUN pip3 install ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib kubernetes-validate openshift PyYAML docopt==0.6.2 PyMySQL ruamel.yaml && \
+  pip3 install yamlpath && \
   pip3 install ansible[azure] && \
   pip3 install -r "https://raw.githubusercontent.com/ansible-collections/azure/${AZ_REQUIREMENT_VERSION}/requirements-azure.txt" && \
   ansible-galaxy collection install azure.azcollection --force && \
@@ -83,8 +87,7 @@ RUN pip3 install ansible-lint docker-py pywinrm jmespath netaddr pexpect passlib
   chmod a+x /tmp/installAzureCli.sh && \
   ./tmp/installAzureCli.sh
 
-RUN chmod +x /etc/ansible/terraform.py && \
-  chmod 700 /usr/local/bin/kn && \
+RUN chmod 700 /usr/local/bin/kn && \
   chmod 700 /usr/local/bin/helm && \
   rm -rf /tmp/* && \
   rm -rf /var/lib/apt/lists/*
