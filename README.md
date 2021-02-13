@@ -1,5 +1,5 @@
 ![Publish Image on Docker Hub](https://github.com/tle06/mgm-infra/workflows/Publish%20to%20Docker%20hub/badge.svg?branch=master)
-
+![Docker hub version](https://img.shields.io/docker/v/tlnk/mgm-infra?sort=date)
 # Management infrastructure
 
 ## Description
@@ -9,6 +9,7 @@ This image is build to be use with gitlab CI/CD pipeline. The target is to deplo
 ## Supported tags and respective
 
 * latest [Dockerfile](https://github.com/tle06/docker-wikijs/blob/master/Dockerfile)
+* [docker hub](https://hub.docker.com/r/tlnk/mgm-infra)
 
 ## Image configuration
 
