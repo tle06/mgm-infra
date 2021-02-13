@@ -22,11 +22,11 @@ RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform
 
 RUN wget https://github.com/nbering/terraform-provider-ansible/releases/download/v${TERRAFORM_PROVIDER_ANSIBLE}/terraform-provider-ansible-linux_amd64.zip && \
   unzip terraform-provider-ansible-linux_amd64.zip && \
-  mv linux_amd64/terraform-provider-ansible_v${TERRAFORM_PROVIDER_ANSIBLE} linux_amd64/terraform-provider-ansible_v${TERRAFORM_PROVIDER_ANSIBLE} && \
   rm terraform-provider-ansible-linux_amd64.zip
 
 RUN wget https://github.com/Mastercard/terraform-provider-restapi/releases/download/v${TERRAFORM_PROVIDER_MASTERCARD_API}/terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}-linux-amd64 && \
-  mv terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}-linux-amd64 linux_amd64/terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}
+  mv terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}-linux-amd64 linux_amd64/terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API} && \
+  chmod +x linux_amd64/*
 
 RUN wget "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
   tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
