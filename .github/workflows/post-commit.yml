@@ -1,4 +1,4 @@
-name: Publish to Docker hub
+name: Build Docker image
 on:
   push:
     branches:
@@ -15,4 +15,4 @@ jobs:
         with:
           context: .
           push: false
-          tags: tlnk/mgm-infra:$(git rev-parse --short $GITHUB_SHA)
+          tags: tlnk/mgm-infra:latest
