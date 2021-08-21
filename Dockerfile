@@ -5,12 +5,12 @@
 
 FROM busybox:1.31.1 AS download
 
-ARG TERRAFORM_VERSION=0.12.24
-ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.3
+ARG TERRAFORM_VERSION=1.0.1
+# ARG TERRAFORM_PROVIDER_ANSIBLE=1.0.4
 ARG TERRAFORM_PROVIDER_MASTERCARD_API=1.15.0
-ARG HELM_VERSION=3.2.1
+ARG HELM_VERSION=3.6.3
 ARG KNATIVE_VERSION=v0.14.0
-ARG KUBECTL_VERSION=v1.18.5
+ARG KUBECTL_VERSION=v1.22.0
 ARG ARGOCDCTL_VERSION=v1.6.1
 ARG GLOOCTL_VERSION=v1.4.2
 
@@ -20,9 +20,9 @@ RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform
   unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
   rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 
-RUN wget https://github.com/nbering/terraform-provider-ansible/releases/download/v${TERRAFORM_PROVIDER_ANSIBLE}/terraform-provider-ansible-linux_amd64.zip && \
-  unzip terraform-provider-ansible-linux_amd64.zip && \
-  rm terraform-provider-ansible-linux_amd64.zip
+# RUN wget https://github.com/nbering/terraform-provider-ansible/releases/download/v${TERRAFORM_PROVIDER_ANSIBLE}/terraform-provider-ansible_${TERRAFORM_PROVIDER_ANSIBLE}_linux_amd64.zip && \
+#   unzip terraform-provider-ansible-linux_amd64.zip && \
+#   rm terraform-provider-ansible-linux_amd64.zip
 
 RUN wget https://github.com/Mastercard/terraform-provider-restapi/releases/download/v${TERRAFORM_PROVIDER_MASTERCARD_API}/terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}-linux-amd64 && \
   mv terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}-linux-amd64 linux_amd64/terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API} && \
@@ -64,7 +64,7 @@ RUN apt update -y && \
   mkdir -p /etc/ansible
 
 COPY --from=download /tmp/terraform /usr/local/bin/terraform
-COPY --from=download /tmp/linux_amd64/ /root/.terraform.d/plugins/linux_amd64/
+#COPY --from=download /tmp/linux_amd64/ /root/.terraform.d/plugins/linux_amd64/
 COPY --from=download /tmp/terraform.py /etc/ansible/terraform.py
 COPY --from=download /tmp/aws /tmp/aws
 COPY --from=download /tmp/linux-amd64/helm /usr/local/bin/helm
