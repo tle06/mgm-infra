@@ -15,5 +15,4 @@ jobs:
         with:
           context: .
           push: false
-          tags: $(git rev-parse --short $GITHUB_SHA)
-          labels: $(git rev-parse --short $GITHUB_SHA)
+          tags: tlnk/mgm-infra:$(git rev-parse --short $GITHUB_SHA)
