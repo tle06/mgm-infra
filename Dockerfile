@@ -18,14 +18,16 @@ WORKDIR /tmp
 
 RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
   unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-  rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+  rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+  echo $(ls -la)
 
 # RUN wget https://github.com/nbering/terraform-provider-ansible/releases/download/v${TERRAFORM_PROVIDER_ANSIBLE}/terraform-provider-ansible_${TERRAFORM_PROVIDER_ANSIBLE}_linux_amd64.zip && \
 #   unzip terraform-provider-ansible-linux_amd64.zip && \
 #   rm terraform-provider-ansible-linux_amd64.zip
 
 RUN wget https://github.com/Mastercard/terraform-provider-restapi/releases/download/v${TERRAFORM_PROVIDER_MASTERCARD_API}/terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}-linux-amd64 && \
-  mv terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}-linux-amd64 linux_amd64/terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API} && \
+  mkdir linux_amd64 && \
+  mv terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}-linux-amd64 linux_amd64/terraform-provider-restapi_v${TERRAFORM_PROVIDER_MASTERCARD_API}-linux-amd64 && \
   chmod +x linux_amd64/*
 
 RUN wget "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
