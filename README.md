@@ -1,4 +1,4 @@
-![Publish Image on Docker Hub](https://github.com/tle06/mgm-infra/workflows/Publish%20to%20Docker%20hub/badge.svg?branch=master)
+[![Publish Docker image](https://github.com/tle06/mgm-infra/actions/workflows/publish.yaml/badge.svg)](https://github.com/tle06/mgm-infra/actions/workflows/publish.yaml)
 ![Docker hub version](https://img.shields.io/docker/v/tlnk/mgm-infra?sort=date)
 # Management infrastructure
 
