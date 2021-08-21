@@ -1,0 +1,19 @@
+name: Publish to Docker hub
+on:
+  push:
+    branches:
+    - master
+jobs:
+  build:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: false
+          tags: $(git rev-parse --short $GITHUB_SHA)
+          labels: $(git rev-parse --short $GITHUB_SHA)
